@@ -1,13 +1,13 @@
 const router = require('express').Router();
 const {
-  getAllThoughts,
-  getThoughtById,
-  createThought,
-  updateThought,
-  removeThought,
-  addReaction,
-  removeReaction
-} = require('../../controllers/tought-controller');
+  getAllUsers,
+  getUserById,
+  createUser,
+  updateUser,
+  deleteUser,
+  addFriend,
+  removeFriend
+} = require('../../controllers/user-controller');
 
 // Set up GET all and POST at /api/users
 router
