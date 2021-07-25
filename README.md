@@ -32,3 +32,14 @@ The API provides the following endpoints:
 - install/setup [MongoDB](https://docs.mongodb.com/manual/installation/)
 - run `npm install` from the project root directory
 - run `npm start`
+
+## Demo
+
+
+
+## Credits
+- [Express](https://www.npmjs.com/package/express) - server, routing
+- [MongoDb](https://www.mongodb.com/) - datastore
+- [Mongoose](https://mongoosejs.com/) - MongoDb object modeling
+
+### GitHub Repo: https://github.com/costanza13/social-network-api
