@@ -54,15 +54,13 @@ const userController = {
           res.status(404).json({ message: 'No user found with this id! ' });
           return;
         }
-        console.log('deleted user username', dbUserData.username);
+        // remove user's thoughts
         Thought.deleteMany({ username: dbUserData.username })
         .then(() => {
-          res.json(dbUserData);
+          res.json({ message: `User ${dbUserData.username} and associated thoughts deleted.` });
         });
       })
       .catch(err => res.status(400).json(err));
-
-    // BONUS: Remove a user's associated thoughts when deleted.
   },
 
   addFriend({ params }, res) {

@@ -33,6 +33,7 @@ const thoughtController = {
   },
 
   createThought({ body }, res) {
+    // check for usear first
     User.findOne({ _id: body.userId })
       .then(dbUserData => {
         if (!dbUserData) {
@@ -41,10 +42,10 @@ const thoughtController = {
         }
         return Thought.create(body);
       })
-      .then(({ id }) => {
+      .then(({ _id }) => {
         return User.findOneAndUpdate(
           { _id: body.userId },
-          { $push: { thoughts: id } },
+          { $push: { thoughts: _id } },
           { new: true }
         )
           .select('-__v');
