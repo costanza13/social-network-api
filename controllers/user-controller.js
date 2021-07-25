@@ -1,21 +1,22 @@
 const User = require('../models/User');
+const Thought = require('../models/Thought');
 
 const userController = {
   getAllUsers(req, res) {
     User.find({})
-    .select('-__v')
-    .sort({ _id: -1 })
-    .then(dbUserData => res.json(dbUserData))
-    .catch(err => {
-      console.log(err);
-      res.status(400).json(err);
-    });
+      .select('-__v')
+      .sort({ username: 1 })
+      .then(dbUserData => res.json(dbUserData))
+      .catch(err => {
+        console.log(err);
+        res.status(400).json(err);
+      });
   },
 
   getUserById({ params }, res) {
     User.findOne({ _id: params.userId })
-    .select('-__v')
-    .then(dbUserData => {
+      .select('-__v')
+      .then(dbUserData => {
         if (!dbUserData) {
           res.status(404).json({ message: 'No user found with this id!' });
           return;
@@ -53,7 +54,11 @@ const userController = {
           res.status(404).json({ message: 'No user found with this id! ' });
           return;
         }
-        res.json(dbUserData);
+        console.log('deleted user username', dbUserData.username);
+        Thought.deleteMany({ username: dbUserData.username })
+        .then(() => {
+          res.json(dbUserData);
+        });
       })
       .catch(err => res.status(400).json(err));
 
