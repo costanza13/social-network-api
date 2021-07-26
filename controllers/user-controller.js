@@ -16,6 +16,14 @@ const userController = {
   getUserById({ params }, res) {
     User.findOne({ _id: params.userId })
       .select('-__v')
+      .populate({
+        path: 'thoughts',
+        select: '-__v'
+      })
+      .populate({
+        path: 'friends',
+        select: '-__v'
+      })
       .then(dbUserData => {
         if (!dbUserData) {
           res.status(404).json({ message: 'No user found with this id!' });
@@ -37,7 +45,8 @@ const userController = {
 
   updateUser({ params, body }, res) {
     User.findOneAndUpdate({ _id: params.userId }, body, { new: true, runValidators: true })
-      .then(dbUserData => {
+    .select('-__v')
+    .then(dbUserData => {
         if (!dbUserData) {
           res.status(404).json({ message: 'No user found with this id! ' });
           return;
@@ -56,21 +65,29 @@ const userController = {
         }
         // remove user's thoughts
         Thought.deleteMany({ username: dbUserData.username })
-        .then(() => {
-          res.json({ message: `User ${dbUserData.username} and associated thoughts deleted.` });
-        });
+          .then(() => {
+            res.json({ message: `User ${dbUserData.username} and associated thoughts deleted.` });
+          });
       })
       .catch(err => res.status(400).json(err));
   },
 
   addFriend({ params }, res) {
-    User.findOneAndUpdate({ _id: params.userId }, { $push: { friends: params.friendId } }, { new: true })
-      .then(dbUserData => {
-        if (!dbUserData) {
-          res.status(404).json({ message: 'No user found with this id! ' });
+    User.findOne({ _id: params.friendId })
+      .then(dbFriendData => {
+        if (!dbFriendData) {
+          res.status(404).json({ message: `No user found with id ${params.friendId}!` });
           return;
         }
-        res.json(dbUserData);
+        const friendId = dbFriendData._id;
+        return User.findOneAndUpdate({ _id: params.userId }, { $push: { friends: friendId } }, { new: true })
+          .then(dbUserData => {
+            if (!dbUserData) {
+              res.status(404).json({ message: 'No user found with this id! ' });
+              return;
+            }
+            res.json(dbUserData);
+          })
       })
       .catch(err => res.status(400).json(err));
   },
