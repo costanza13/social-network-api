@@ -2,7 +2,7 @@
 
 A basic backend and API for a social networking application that supports creating accounts, adding friends, and posting thoughts and reactions.  The server uses Express to power the API routes, and MongoDB for the datastore -- to support potentially large sets of unstructured data and flexibility as features are added or modified.
 
-## Features/Funcitonality
+## Features/Funcitonality ([Demo Video](https://drive.google.com/file/d/1vIml1xIBt0ZrUXoemdkaHUIb9zSBsGqF/view))
 
 The API provides the following endpoints:
 ### Users
@@ -33,13 +33,11 @@ The API provides the following endpoints:
 - run `npm install` from the project root directory
 - run `npm start`
 
-## Demo
-
-
-
 ## Credits
 - [Express](https://www.npmjs.com/package/express) - server, routing
 - [MongoDb](https://www.mongodb.com/) - datastore
 - [Mongoose](https://mongoosejs.com/) - MongoDb object modeling
 
 ### GitHub Repo: https://github.com/costanza13/social-network-api
+
+### Check out the [Demo Video](https://drive.google.com/file/d/1vIml1xIBt0ZrUXoemdkaHUIb9zSBsGqF/view)
